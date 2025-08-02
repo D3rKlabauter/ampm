@@ -16,31 +16,25 @@ namespace ampm {
 	// ----------------------
 	LogEventLevel getLogLevel(ofLogLevel level)
 	{
-
 		switch (level) {
 		case OF_LOG_VERBOSE:
 			return LogEventLevel::AMPM_INFO;
-			break;
 		case OF_LOG_NOTICE:
 			return LogEventLevel::AMPM_INFO;
-			break;
 		case OF_LOG_WARNING:
 			return LogEventLevel::AMPM_WARNING;
-			break;
 		case OF_LOG_ERROR:
 			return LogEventLevel::AMPM_ERROR;
-			break;
 		case OF_LOG_FATAL_ERROR:
 			return LogEventLevel::AMPM_ERROR;
-			break;
 		case OF_LOG_SILENT:
 			return LogEventLevel::AMPM_INFO;
-			break;
 		default:
 			break;
 		}
 		return LogEventLevel::AMPM_ERROR;
 	}
+
 	AMPMLoggerChannel::AMPMLoggerChannel()
 	{
 	}
@@ -55,15 +49,15 @@ namespace ampm {
 			ampm::ampm()->log(getLogLevel(level), "[" + ofGetLogLevelName(level, false) + "] " + module + ": " + message);
 		}
 		else {
-			// print to cerr for OF_LOG_ERROR and OF_LOG_FATAL_ERROR, everything else to cout
-			stringstream out;
+			// Log using ofLog for all levels (cross-platform)
+			std::stringstream out;
 			out << "[" << ofGetLogLevelName(level, false) << "] ";
-			// only print the module name if it's not ""
-			if (module != "") {
+			if (!module.empty()) {
 				out << module << ": ";
 			}
-			out << message << endl;
-			OutputDebugStringA(out.str().c_str());
+			out << message;
+
+			ofLog(level) << out.str();
 		}
 	}
 
@@ -77,28 +71,23 @@ namespace ampm {
 
 	void AMPMLoggerChannel::log(ofLogLevel level, const std::string& module, const char* format, va_list args)
 	{
-		std::string buffer;
-		buffer = "[" + ofGetLogLevelName(level, false) + "] ";
-		if (module != "") {
+		std::string buffer = "[" + ofGetLogLevelName(level, false) + "] ";
+		if (!module.empty()) {
 			buffer += module + ": ";
 		}
 		buffer += ofVAArgsToString(format, args);
-		buffer += "\n";
 
 		if (isAMPMLoggingLevel(level)) {
 			ampm::ampm()->log(getLogLevel(level), buffer);
 		}
 		else {
-			OutputDebugStringA(buffer.c_str());
+			ofLog(level) << buffer;
 		}
 	}
 
 	bool AMPMLoggerChannel::isAMPMLoggingLevel(ofLogLevel level)
 	{
-		if (std::find(m_levelsToLog.begin(), m_levelsToLog.end(), level) != m_levelsToLog.end()) {
-			return true;
-		}
-		return false;
+		return std::find(m_levelsToLog.begin(), m_levelsToLog.end(), level) != m_levelsToLog.end();
 	}
 
 	// ----------------------
