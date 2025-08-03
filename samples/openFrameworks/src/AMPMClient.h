@@ -3,11 +3,12 @@
 #include "ofJson.h"
 #include "ofxOsc.h"
 
+#include <cstdarg>
 #include <queue>
 
 namespace ampm {
 
-	static const enum LogEventLevel {
+	enum class LogEventLevel {
 		AMPM_INFO = 1,
 		AMPM_ERROR,
 		AMPM_WARNING,
