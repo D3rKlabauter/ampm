@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 var path = require("path"); //http://nodejs.org/api/path.html
-var fs = require("fs"); // Recursive directory creation. https://github.com/bpedro/node-fs
+var fs = require("node-fs"); // Recursive directory creation. https://github.com/bpedro/node-fs
 var os = require("os"); // http://nodejs.org/api/os.html
 var _ = require("lodash"); // Utilities. http://underscorejs.org/
 var child_process = require("child_process"); // http://nodejs.org/api/child_process.html
