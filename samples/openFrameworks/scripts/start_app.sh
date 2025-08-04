@@ -1,3 +1,3 @@
 #!/bin/bash
-cd "$(dirname "$0")/../samples/openFrameworks/bin" || exit 1
+cd samples/openFrameworks/bin
 startx ./openFrameworks -- -s off
