@@ -30,6 +30,7 @@ namespace ampm {
 
 	private:
 		bool isAMPMLoggingLevel(ofLogLevel level);
+		// Logging options: OF_LOG_VERBOSE, OF_LOG_NOTICE, OF_LOG_WARNING, OF_LOG_ERROR, OF_LOG_FATAL_ERROR
 		std::vector<ofLogLevel> m_levelsToLog = { OF_LOG_ERROR, OF_LOG_FATAL_ERROR };
 	};
 
