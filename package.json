@@ -10,10 +10,10 @@
 	},
 	"preferGlobal": true,
 	"bin": {
-		"ampm": "start.js"
+		"ampm": "start.cjs"
 	},
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=22.13.1"
 	},
 	"dependencies": {
 		"async": "^3.2.4",
@@ -47,5 +47,5 @@
 	"overrides": {
 		"axios": "^1.9.0"
 	},
-	"type": "commonjs"
+	"type": "module"
 }
