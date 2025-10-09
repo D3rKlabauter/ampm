@@ -2,14 +2,12 @@
 
 #include "ofJson.h"
 #include "ofxOsc.h"
+
 #include <queue>
-#include <memory>
-#include <vector>
-#include <string>
 
 namespace ampm {
 
-	enum LogEventLevel {
+	static const enum LogEventLevel {
 		AMPM_INFO = 1,
 		AMPM_ERROR,
 		AMPM_WARNING,
@@ -23,14 +21,12 @@ namespace ampm {
 		~AMPMLoggerChannel();
 
 	protected:
-		// Matches exactly the virtual methods in ofBaseLoggerChannel (oF 0.12.1)
-		void log(ofLogLevel level, const std::string& module, const std::string& message) override;
-		void log(ofLogLevel level, const std::string& module, const char* format, ...) OF_PRINTF_ATTR(4, 5) ;
-		void log(ofLogLevel level, const std::string& module, const char* format, va_list args) ;
+		void log(ofLogLevel level, const std::string& module, const std::string& message);
+		void log(ofLogLevel level, const std::string& module, const char* format, ...) OF_PRINTF_ATTR(4, 5);
+		void log(ofLogLevel level, const std::string& module, const char* format, va_list args);
 
 	private:
 		bool isAMPMLoggingLevel(ofLogLevel level);
-		// Logging options: OF_LOG_VERBOSE, OF_LOG_NOTICE, OF_LOG_WARNING, OF_LOG_ERROR, OF_LOG_FATAL_ERROR
 		std::vector<ofLogLevel> m_levelsToLog = { OF_LOG_ERROR, OF_LOG_FATAL_ERROR };
 	};
 
@@ -48,6 +44,7 @@ namespace ampm {
 		static void init(int sendPort, int recvPort, int serverPORT);
 		static void set(AMPMClient* instance);
 
+		//static AMPMClientRef create( int sendPort, int recvPort );
 		~AMPMClient();
 
 		ofJson getConfig();
@@ -70,10 +67,8 @@ namespace ampm {
 		return AMPMClient::get();
 	}
 
-	// log macros
-	#define AMPM_LOG(M)       AMPMClient::get()->log(ampm::LogEventLevel::AMPM_INFO, M)
-	#define AMPM_LOG_ERR(M)   AMPMClient::get()->log(ampm::LogEventLevel::AMPM_ERROR, M)
-	#define AMPM_LOG_WARN(M)  AMPMClient::get()->log(ampm::LogEventLevel::AMPM_WARNING, M)
-
+	// log macros (quick way to send log events to server)
+#define AMPM_LOG( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_INFO, M,)
+#define AMPM_LOG_ERR( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_ERROR, M )
+#define AMPM_LOG_WARN( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_WARNING, M )
 }  // namespace ampm
-
