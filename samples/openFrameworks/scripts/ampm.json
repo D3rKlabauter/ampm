@@ -1,7 +1,7 @@
 {
     "default": {
         "persistence": {
-            "launchCommand": "../bin/openFrameworks_debug.exe",
+            "launchCommand": "../bin/openFrameworksDebug.app/Contents/MacOS/openFrameworksDebug",
             "maxMemory": 0,
             "startupTimeout": 15,
             "heartbeatTimeout": 15
