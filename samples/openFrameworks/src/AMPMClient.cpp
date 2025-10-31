@@ -1,6 +1,13 @@
 #include "ofMain.h"
 #include "AMPMClient.h"
 
+/*
+ NOTE: Logging backend change
+ - We standardized fallback logging to std::cerr on all platforms for portability.
+ - Previously, Windows builds used OutputDebugStringA for convenient debugger output.
+ - If you want the Windows-only debugger output during development, see the inline notes below where std::cerr is used and replace with OutputDebugStringA guarded by `#ifdef _WIN32`.
+*/
+
 #include <unordered_map>
 using namespace std;
 
@@ -63,7 +70,10 @@ namespace ampm {
 				out << module << ": ";
 			}
 			out << message << endl;
-			OutputDebugStringA(out.str().c_str());
+			// DEV NOTE: For Windows-only debugger output during development, you can use:
+			//   OutputDebugStringA(out.str().c_str());  // requires <windows.h> and #ifdef _WIN32
+			// We use std::cerr on all platforms for production portability.
+			std::cerr << out.str();
 		}
 	}
 
@@ -89,7 +99,10 @@ namespace ampm {
 			ampm::ampm()->log(getLogLevel(level), buffer);
 		}
 		else {
-			OutputDebugStringA(buffer.c_str());
+			// DEV NOTE: For Windows-only debugger output during development, you can use:
+			//   OutputDebugStringA(buffer.c_str());  // requires <windows.h> and #ifdef _WIN32
+			// We use std::cerr on all platforms for production portability.
+			std::cerr << buffer;
 		}
 	}
 
@@ -207,3 +220,4 @@ namespace ampm {
 	}
 
 }  // namespace ampm
+
