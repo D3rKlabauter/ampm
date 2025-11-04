@@ -9,6 +9,9 @@
 */
 
 #include <unordered_map>
+// Required for va_list/va_start/va_end. Clang on macOS often pulls this in implicitly,
+// but GCC (e.g., on Raspberry Pi) requires an explicit include for portability.
+#include <cstdarg>
 using namespace std;
 
 namespace ampm {

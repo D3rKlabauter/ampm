@@ -7,7 +7,7 @@
 
 namespace ampm {
 
-	static const enum LogEventLevel {
+	enum class LogEventLevel {
 		AMPM_INFO = 1,
 		AMPM_ERROR,
 		AMPM_WARNING,
@@ -68,7 +68,7 @@ namespace ampm {
 	}
 
 	// log macros (quick way to send log events to server)
-#define AMPM_LOG( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_INFO, M,)
+#define AMPM_LOG( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_INFO, M )
 #define AMPM_LOG_ERR( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_ERROR, M )
 #define AMPM_LOG_WARN( M ) AMPMClient::get()->log( ampm::LogEventLevel::AMPM_WARNING, M )
 }  // namespace ampm
