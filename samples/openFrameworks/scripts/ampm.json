@@ -38,7 +38,7 @@
     },
     "pi": {
             "persistence": {
-                "launchCommand": ".start.sh"
+                "launchCommand": "./start.sh"
             }
         },
 }
